@@ -13,7 +13,7 @@ api_key = app.config['NEWS_API_KEY']
 
 def get_news(source):
     '''
-    Function that gets the json responce to our url request
+    Function that gets the json response to our url request
     '''
     get_news_url = api_key
 
@@ -28,3 +28,18 @@ def get_news(source):
             news_results = process_results(news_results_list)
 
     return news_results
+
+def process_results(news_results_list):
+    news_results = []
+    for news_item in news_results_list:
+        name = news_item.get('title')
+        description = news_item.get('description')
+        url = news_item.get('url')
+        category = news_item.get('urlToImage')
+
+        if name:
+            news_obj = News(title, description, url, urlToImage)
+            news_results.append(news_obj)
+
+    return news_results
+
