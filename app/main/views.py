@@ -14,6 +14,19 @@ def index():
     news = []
     url = []
     img = []
+    
+    for i in range(len(articles)):
+        myarticles = articles[i]
+
+        news.append(myarticles['title'])
+        desc.append(myarticles['description'])
+        url.append(myarticles['url'])
+        img.append(myarticles['urlToImage'])
+        
+
+    mylist = zip(news, desc, url, img)
+
+    return render_template('index.html', context=mylist)
 
 
 if __name__ == "__main__":
