@@ -13,20 +13,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
   <body onload="startTime()" style="background-color: darkkhaki;">
-    <div
-      id="txt"
-      style="padding-left: 0.7%; font-size: 30px; font-weight: bolder; position: fixed; padding-top: 50px;"
-    ></div>
+    <div id="txt" style="padding-left: 0.7%; font-size: 30px; font-weight: bolder; position: fixed; padding-top: 50px;"></div>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="position:fixed;width: 100%;">
       <!-- Brand -->
-      <a class="navbar-brand" href="#"><b>NEWS CENTER</b></a>
+      <a class="navbar-brand" href="#"><b>NEWS DASHBOARD</b></a>
 
       <!-- Links -->
       <ul class="navbar-nav" style="padding-left: 200px">
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('index') }}" style="color: white"
-            ><b>Home</b></a
-          >
+          <a class="nav-link" href="{{ url_for('main.index') }}" style="color: white; font-size:20px;" ><b>Home</b></a>
         </li>
         <br />
 
@@ -37,19 +32,20 @@
             href="#"
             id="navbardrop"
             data-toggle="dropdown"
-            style="color: white; padding-left: 70px"
+            style="color:white; padding-left: 70px"
           >
             <b>More News</b>
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{ url_for('bbc') }}">BBC News</a>
-            <a class="dropdown-item" href="{{ url_for('index') }}">ABC News</a>
-            <a class="dropdown-item" href="{{ url_for('cnn') }}">CNN News</a>
-            <a class="dropdown-item" href="{{ url_for('business') }}">BUSINESS News</a>
+            <a class="dropdown-item" href="">BBC News</a>
+            <a class="dropdown-item" href="{{ url_for('main.index') }}">ABC News</a>
+            <a class="dropdown-item" href="">CNN News</a>
+            <a class="dropdown-item" href="">BUSINESS News</a>
           </div>
         </li>
       </ul>
     </nav>
+    <br><br><br>
     <script>
       function startTime() {
         var today = new Date();

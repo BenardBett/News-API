@@ -1,108 +1,24 @@
-from flask import Flask
-from newsapi import NewsApiClient
-
-app = Flask(__name__)
-
-@app.route('/')
+from flask import render_template, request, redirect, url_for
+from . import main
+from ..requests import get_sources, get_articles
+from ..models import Sources
+# views
+@main.route('/')
 def index():
-    newsapi = NewsApiClient(api_key="d4df65110d1448f28e60b32fe558da44")
-    topheadlines = newsapi.get_top_headlines(sources="abc-news")
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    url = []
-    img = []
-    
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        url.append(myarticles['url'])
-        img.append(myarticles['urlToImage'])
-        
-
-    mylist = zip(news, desc, url, img)
-
-    return render_template('index.html', context=mylist)
-
-app.route('/bbc')
-def bbc():
-    newsapi = NewsApiClient(api_key="d40c178ee0c6474f963ed683b651a3ab")
-    topheadlines = newsapi.get_top_headlines(sources="bbc-news")
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    url = []
-    img = []
-    
-
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        url.append(myarticles['url'])
-        img.append(myarticles['urlToImage'])
-
-    mylist = zip(news, desc, url, img)
-
-    return render_template('bbc.html', context=mylist)
-
-@app.route('/cnn')
-def cnn():
-    newsapi = NewsApiClient(api_key="d40c178ee0c6474f963ed683b651a3ab")
-    topheadlines = newsapi.get_top_headlines(sources="cnn")
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    url = []
-    img = []
-   
-
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        url.append(myarticles['url'])
-        img.append(myarticles['urlToImage'])
-
-    mylist = zip(news, desc, url, img)
-
-    return render_template('cnn.html', context=mylist)
-
-
-@app.route('/business')
-def business():
-    newsapi = NewsApiClient(api_key="d40c178ee0c6474f963ed683b651a3ab")
-    topheadlines = newsapi.get_top_headlines(sources="business-insider")
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    url = []
-    img = []
-
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        url.append(myarticles['url'])
-        img.append(myarticles['urlToImage'])
-
-    mylist = zip(news, desc, url, img)
-
-    return render_template('business.html', context=mylist)
-
-if __name__ == "__main__":
-    app.run(debug=True)
-    app.run
+    '''
+    view root page function that returns the index the page and its data
+    '''
+    sources = get_sources('sources')
+    sports_sources = get_sources('sports')
+    technology_sources = get_sources('technology')
+    entertainment_sources = get_sources('entertainment')
+    title = "Home - News Highlighter"
+    return render_template('index.html', title=title, sources=sources, sports_sources=sports_sources, technology_sources=technology_sources, entertainment_sources=entertainment_sources)
+@main.route('/sources/<id>')
+def articles(id):
+    '''
+    view articles page
+    '''
+    articles = get_articles(id)
+    title = f'NH | {id}'
+    return render_template('articles.html', title=title, articles=articles)
